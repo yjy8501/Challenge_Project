@@ -15,5 +15,9 @@ public class Notification {
     // 공지사항 번호
     int no;
 
+    // 공지사항 제목
+    String title;
 
+    // 공지사항 본문
+    String body;
 }
