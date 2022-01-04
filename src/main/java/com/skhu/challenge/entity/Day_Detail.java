@@ -2,22 +2,28 @@ package com.skhu.challenge.entity;
 
 import lombok.Data;
 
+
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.sql.Date;
 
 @Data
 @Entity
-public class Date {
-    @Id
+public class Day_Detail implements Serializable {
+   /* @Id
     // 챌린지 id
     int challenge_id;
 
     @Id
     // 유저 id
-    int user_id;
+    int user_id;*/
+
+    @EmbeddedId
+    Day_DetailPK pk;
 
     // 날짜
-    java.sql.Date day_detail;
+    Date date;
 
     // 챌린지 실행 여부
     Boolean check;
