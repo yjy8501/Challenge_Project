@@ -3,24 +3,16 @@ package com.skhu.challenge.entity;
 import lombok.Data;
 
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import java.io.Serializable;
+import javax.persistence.*;
 import java.sql.Date;
 
 @Data
 @Entity
-public class Day_Detail implements Serializable {
-   /* @Id
-    // 챌린지 id
-    int challenge_id;
-
+public class Day_Detail {
     @Id
-    // 유저 id
-    int user_id;*/
-
-    @EmbeddedId
-    Day_DetailPK pk;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // Day_Detail id
+    int id;
 
     // 날짜
     Date date;
@@ -35,4 +27,13 @@ public class Day_Detail implements Serializable {
     String image;
 
 
+    // challenge 객체
+    @ManyToOne
+    @JoinColumn(name= "challenge_id")
+    Challenge challenge;
+
+    // user 객체
+    @ManyToOne
+    @JoinColumn(name= "user_id")
+    User user;
 }

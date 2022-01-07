@@ -2,6 +2,8 @@ package com.skhu.challenge.controller;
 
 import java.util.List;
 
+import com.skhu.challenge.model.Login;
+import com.skhu.challenge.model.SignUp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,13 +31,6 @@ public class UserController {
         return userRepository.findById(id).get();
     }
 
-    // 간단한 회원가입 기능
-    @PostMapping("User")
-    public boolean insert(@RequestBody User user) {
-        userRepository.save(user);
-        return true;
-    }
-
     @PutMapping("User")
     public boolean update(@RequestBody User user) {
         userRepository.save(user);
@@ -48,20 +43,34 @@ public class UserController {
         return true;
     }
 
+    // 간단한 회원가입 기능
+    @PostMapping("root/api/signup")
+    public Object insert(@RequestBody User user) {
+        userRepository.save(user);
+        SignUp signUp = new SignUp();
+        signUp.changeSuccess();
+        return signUp;
+    }
+
     // 간단한 로그인 기능
-    @PostMapping("User/SignUp/{email}/{password}")
-    public String sign_up(@PathVariable("email") String email, @PathVariable("password") String password) {
+    @PostMapping("root/api/login/{email}/{password}")
+    public Object sign_up(@PathVariable("email") String email, @PathVariable("password") String password) {
+        Login login = new Login();
         try{
             User user = userRepository.findByEmail(email);
             if(user.getPassword().equals(password)) {
-                return "로그인 성공";
+                login.changeSuccess();
+                login.setUser_id(user.getId());
+                return login;
             }
             else{
-                return "로그인 실패";
+                login.setUser_id(500); // 500이면 password 오류
+                return login;
             }
         }
         catch (NullPointerException e) {
-            return "로그인 실패";
+            login.setUser_id(400); // 400이면 emial 오류
+            return login;
         }
 
 
