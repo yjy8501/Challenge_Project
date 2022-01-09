@@ -3,7 +3,7 @@ package com.skhu.challenge.controller;
 import java.util.List;
 
 import com.skhu.challenge.model.Login;
-import com.skhu.challenge.model.SignUp;
+import com.skhu.challenge.model.Success;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,9 +47,9 @@ public class UserController {
     @PostMapping("root/api/signup")
     public Object insert(@RequestBody User user) {
         userRepository.save(user);
-        SignUp signUp = new SignUp();
-        signUp.changeSuccess();
-        return signUp;
+        Success success = new Success();
+        success.changeSuccess();
+        return success;
     }
 
     // 간단한 로그인 기능
